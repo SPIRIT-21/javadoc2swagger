@@ -94,16 +94,18 @@ Following section lists some errors that might occure when executing the plugin 
 * "Error loading Class *className*"
   * An error occured while loading the specified class.
   * Solution: The plugin is only able to 'see' the source code from the project in which it is executed. When a class from another project is not being found, simply pass the project to the plugin as dependency, like in the following example:
-	
-	<plugin>
-		<groupId>com.spirit21</groupId>
-    	<artifactId>javadoc2swagger-maven-plugin</artifactId>
-    	...
-    	<dependencies>
-			<dependency>
-				<groupId>GROUP-ID</groupId>
-				<artifactId>ARTIFACT-ID</artifactId>
-				<version>VERSION</version>
-			</dependency>
-		</dependencies>
-    </plugin>
+  
+```xml
+<plugin>
+	<groupId>com.spirit21</groupId>
+	<artifactId>javadoc2swagger-maven-plugin</artifactId>
+	...
+	<dependencies>
+		<dependency>
+			<groupId>GROUP-ID</groupId>
+			<artifactId>ARTIFACT-ID</artifactId>
+			<version>VERSION</version>
+		</dependency>
+	</dependencies>
+</plugin>
+```
