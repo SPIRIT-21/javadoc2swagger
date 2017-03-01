@@ -20,6 +20,7 @@ public class ClassJavadocLoader extends AbstractLoader {
      * returns it, if it was found
      * 
      * @param fileString
+     *            file as a single string
      * @return Javadoc section as String
      */
     public String getClassJavadocFromJavaFile(String fileString) {

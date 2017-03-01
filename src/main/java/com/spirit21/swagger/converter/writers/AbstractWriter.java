@@ -18,6 +18,7 @@ public abstract class AbstractWriter {
      * appends the prefix for definitions in swagger files
      * 
      * @param in
+     *            input string
      * @return merged strings
      */
     protected String appendDefinitionPrefix(String in) {

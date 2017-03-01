@@ -22,7 +22,8 @@ public class TagWriter extends AbstractWriter {
      * Creates JSON for the global tag list
      * 
      * @param tags
-     * @return
+     *            list of {@link Tag} objects
+     * @return JSON for tags
      */
     public JSONArray mapTagDefinitions(List<Tag> tags) {
         JSONArray tagsJson = new JSONArray();
@@ -43,7 +44,8 @@ public class TagWriter extends AbstractWriter {
      * Creates JSON for a local tag lost
      * 
      * @param tags
-     * @return
+     *            list of {@link Tag} objects
+     * @return JSON for tags
      */
     public JSONArray mapTags(List<Tag> tags) {
         JSONArray tagsJson = new JSONArray();

@@ -24,7 +24,8 @@ public class DefinitionWriter extends AbstractWriter {
      * Creates JSON for all definitions
      * 
      * @param definitions
-     * @return
+     *            list of {@link Definition} objects
+     * @return JSON for definitions
      */
     public JSONObject mapDefinitions(List<Definition> definitions) {
         JSONObject definitionsJson = new JSONObject();
@@ -38,7 +39,8 @@ public class DefinitionWriter extends AbstractWriter {
      * Creates JSON for one definition
      * 
      * @param definition
-     * @return
+     *            {@link Definition} object
+     * @return JSON for definition
      */
     private JSONObject mapDefinition(Definition definition) {
         JSONObject obj = new JSONObject();

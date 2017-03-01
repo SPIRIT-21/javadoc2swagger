@@ -21,8 +21,9 @@ public class ClassLoader {
      * Initializes the ClassLoader
      * 
      * @param project
-     * @param log
+     *            Maven Project
      * @throws ClassLoaderException
+     *             Failed to initialize the ClassLoader
      */
     public ClassLoader(MavenProject project) throws ClassLoaderException {
         try {
@@ -42,8 +43,10 @@ public class ClassLoader {
      * Loads a class with the {@link URLClassLoader}
      * 
      * @param name
+     *            Name of the class
      * @return loaded class
      * @throws ClassNotFoundException
+     *             Class was not found
      */
     public Class<?> loadClass(String name) throws ClassNotFoundException {
         return loader.loadClass(name);

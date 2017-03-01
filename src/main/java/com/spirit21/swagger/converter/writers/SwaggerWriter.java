@@ -33,11 +33,18 @@ public class SwaggerWriter extends AbstractWriter {
      * Creates a Swagger definition with information provided in the
      * {@link Swagger} object
      * 
-     * @param basePath
      * @param swaggerObject
      *            object in the {@link Swagger} format
+     * @param basePath
+     *            base path of the project
+     * @param tags
+     *            list of all tags
+     * @param definitions
+     *            list of all definitions
      * @throws WriterException
+     *             Error while writing the Swagger JSON file
      * @throws IOException
+     *             I/O Exception is thrown
      */
     public void createSwaggerDefinition(Swagger swaggerObject, String basePath, List<Tag> tags,
             List<Definition> definitions) throws WriterException, IOException {
@@ -67,10 +74,14 @@ public class SwaggerWriter extends AbstractWriter {
      * Writes a given JSON object to a file
      * 
      * @param swaggerJson
+     *            JSON object containing the whole swagger definition
      * @param basePath
+     *            base path of the projects
      * @param fileName
+     *            file name
      * @throws IOException
      * @throws WriterException
+     *             Error while writing the Swagger JSON file
      */
     private void write(JSONObject swaggerJson, String basePath, String fileName) throws IOException, WriterException {
         try (Writer fw = getWriter(basePath, fileName)) {
@@ -84,8 +95,10 @@ public class SwaggerWriter extends AbstractWriter {
      * Creates the file writer
      * 
      * @param basePath
+     *            base path of the projects
      * @param fileName
-     * @return
+     *            file name
+     * @return file writer
      * @throws IOException
      */
     private Writer getWriter(String basePath, String fileName) throws IOException {
@@ -101,7 +114,8 @@ public class SwaggerWriter extends AbstractWriter {
      * Creates JSON for the info object of the Swagger definition
      * 
      * @param swaggerObject
-     * @return
+     *            {@link Swagger} object
+     * @return JSON for info
      */
     private JSONObject mapInfo(Swagger swaggerObject) {
         JSONObject info = new JSONObject();

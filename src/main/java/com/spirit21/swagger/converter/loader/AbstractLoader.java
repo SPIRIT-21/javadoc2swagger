@@ -22,6 +22,7 @@ public abstract class AbstractLoader {
      * sequential white spaces with a single white space
      * 
      * @param str
+     *            input string
      * @return formatted string
      */
     protected String removeJavadocCharactersFromString(String str) {

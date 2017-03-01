@@ -16,6 +16,7 @@ public class HttpMethodAnnotationHandler {
      * or @DELETE
      * 
      * @param cls
+     *            Class of annotation to check
      * @return null or http method in lower case
      */
     public String getHttpMethodAnnotationType(Class<?> cls) {

@@ -21,8 +21,8 @@ public class ImportLoader extends AbstractLoader {
      * Tests a given pattern on a given string and returns an array of all
      * matches.
      * 
-     * @param pattern
      * @param file
+     *            file as string
      * @return List of string
      */
     public List<String> getImportsFromFile(String file) {

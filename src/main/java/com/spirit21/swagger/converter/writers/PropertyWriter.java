@@ -21,7 +21,8 @@ public class PropertyWriter extends AbstractWriter {
      * Creates JSON for properties
      * 
      * @param properties
-     * @return
+     *            list of {@link Property} objects
+     * @return JSON for properties
      */
     public JSONObject mapProperties(List<Property> properties) {
         JSONObject obj = new JSONObject();

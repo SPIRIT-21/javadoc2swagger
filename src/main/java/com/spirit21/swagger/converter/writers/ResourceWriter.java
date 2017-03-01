@@ -23,7 +23,8 @@ public class ResourceWriter extends AbstractWriter {
      * Creates JSON for multiple resources
      * 
      * @param resources
-     * @return
+     *            list of {@link Resource} objects
+     * @return JSON for resources
      */
     public JSONObject mapResources(List<Resource> resources) {
         JSONObject resourcesJson = new JSONObject();

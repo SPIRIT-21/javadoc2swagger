@@ -32,9 +32,16 @@ public class ParameterParser extends AbstractParser {
      * Searches for parameters in function header.
      * 
      * @param header
+     *            method header
      * @param imports
+     *            imports of the java file
+     * @param javadoc
+     *            javadoc section
+     * @param fileName
+     *            java file name
      * @return parameters
      * @throws ParserException
+     *             Error while the parsing process
      */
     public List<Parameter> findParametersInMethodHeader(String header, List<String> imports, String javadoc,
             String fileName) throws ParserException {
@@ -72,8 +79,12 @@ public class ParameterParser extends AbstractParser {
      * @param paramUnformatted
      *            parameter with white spaces and annotations
      * @param imports
+     *            imports of the java file
+     * @param fileName
+     *            java file name
      * @return parameter or null
      * @throws ParserException
+     *             Error while the parsing process
      */
     private Parameter getParameter(String paramUnformatted, List<String> imports, String fileName)
             throws ParserException {
@@ -135,7 +146,8 @@ public class ParameterParser extends AbstractParser {
      * Gets the query parameter name
      * 
      * @param paramUnformatted
-     * @return
+     *            unformatted query parameter annotation
+     * @return formatted string
      */
     private String getNameFromQueryParamAnnotation(String paramUnformatted) {
         String regex = "@QueryParam\\(\"[\\w]+\"";
@@ -151,6 +163,7 @@ public class ParameterParser extends AbstractParser {
      * Initializes the HashMap for a parameter and its description
      * 
      * @param javadoc
+     *            javadoc section
      * @return Map
      */
     private Map<String, String> getParameterDescriptionMap(String javadoc) {

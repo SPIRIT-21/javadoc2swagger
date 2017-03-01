@@ -23,7 +23,8 @@ public class ParameterWriter extends AbstractWriter {
      * Creates parameters JSON
      * 
      * @param parameters
-     * @return
+     *            list of {@link Parameter} objects
+     * @return JSON for all parameters
      */
     public JSONArray mapParameters(List<Parameter> parameters) {
         JSONArray parametersJson = new JSONArray();
@@ -37,7 +38,8 @@ public class ParameterWriter extends AbstractWriter {
      * Creates JSON for one parameter
      * 
      * @param parameter
-     * @return
+     *            {@link Parameter} object
+     * @return JSON for one parameter
      */
     private JSONObject mapParameter(Parameter parameter) {
         JSONObject obj = new JSONObject();

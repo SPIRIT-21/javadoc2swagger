@@ -22,7 +22,8 @@ public class ResponseWriter extends AbstractWriter {
      * Creates JSON for multiple responses
      * 
      * @param responses
-     * @return
+     *            list of {@link Response} objects
+     * @return JSON for responses
      */
     public JSONObject mapResponses(List<Response> responses) {
         JSONObject responsesJson = new JSONObject();
@@ -36,7 +37,8 @@ public class ResponseWriter extends AbstractWriter {
      * Creates JSON for a single response
      * 
      * @param response
-     * @return
+     *            {@link Response} object
+     * @return JSON for one response
      */
     private JSONObject mapResponse(Response response) {
         JSONObject obj = new JSONObject();

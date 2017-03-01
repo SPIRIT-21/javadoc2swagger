@@ -27,7 +27,8 @@ public class DataTypeFactory {
     /**
      * Tries all TypeHandlers on a given type
      * 
-     * @param className
+     * @param type
+     *            Given type
      * @return {@link DataType} object
      */
     public DataType getDataType(String type) {

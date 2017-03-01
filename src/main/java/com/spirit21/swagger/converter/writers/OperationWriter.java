@@ -28,8 +28,10 @@ public class OperationWriter extends AbstractWriter {
      * Creates operations JSON
      * 
      * @param operations
+     *            list of {@link Operation} objects
      * @param pathParam
-     * @return
+     *            possible path parameter
+     * @return JSON for all operations
      */
     public JSONObject mapOperations(List<Operation> operations, Parameter pathParam) {
         JSONObject operationsJson = new JSONObject();
@@ -43,8 +45,10 @@ public class OperationWriter extends AbstractWriter {
      * Creates JSON for an operation
      * 
      * @param operation
+     *            {@link Operation} object
      * @param pathParam
-     * @return
+     *            possible path parameter
+     * @return JSON for a single operation
      */
     private JSONObject mapOperation(Operation operation, Parameter pathParam) {
         JSONObject obj = new JSONObject();

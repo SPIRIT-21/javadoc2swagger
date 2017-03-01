@@ -31,6 +31,7 @@ public class DefinitionParser extends AbstractParser {
      * Checks if a definition is already contained in the definitions
      * 
      * @param className
+     *            class name
      * @return bool
      */
     public Definition getDefinitionByClassName(String className) {
@@ -43,14 +44,18 @@ public class DefinitionParser extends AbstractParser {
     }
 
     /**
-     * Checks if a schema is already defined in {@link Definitions} and creates
-     * a {@link Definition} if necessary
+     * Checks if a schema is already defined and creates a {@link Definition} if
+     * necessary
      * 
      * @param input
      *            link tag, class name or swagger reference
      * @param imports
+     *            imports of the java file
+     * @param fileName
+     *            file name
      * @return class name
      * @throws ParserException
+     *             Error while the parsing process
      */
     public String createDefinitionIfNotExists(String input, List<String> imports, String fileName)
             throws ParserException {
@@ -75,9 +80,17 @@ public class DefinitionParser extends AbstractParser {
      * object for the class.
      * 
      * @param className
+     *            class name
      * @param imports
+     *            imports of the java file
+     * @param fileName
+     *            file name
+     * @param rootDefinition
+     *            definition where the recursion started to prevent an endless
+     *            loop
      * @return new {@link Definition} object
      * @throws ParserException
+     *             Error while the parsing process
      */
     public Definition createDefinitionByClassName(String className, List<String> imports, String fileName,
             Definition rootDefinition) throws ParserException {
@@ -108,8 +121,15 @@ public class DefinitionParser extends AbstractParser {
      * Processes all fields of a class
      * 
      * @param fields
+     *            array of fields
+     * @param definition
+     *            current definition
+     * @param rootDefinition
+     *            definition where the recursion started to prevent an endless
+     *            loop
      * @return list of {@link Property} objects
      * @throws ParserException
+     *             Error while the parsing process
      */
     public List<Property> processFields(Field[] fields, Definition definition, Definition rootDefinition)
             throws ParserException {
@@ -147,8 +167,16 @@ public class DefinitionParser extends AbstractParser {
      * Processes the generic type and adds it to the {@link Property} object
      * 
      * @param genericType
+     *            generic type
      * @param property
+     *            current {@link Property} object
+     * @param definition
+     *            current definition
+     * @param rootDefinition
+     *            definition where the recursion started to prevent an endless
+     *            loop
      * @throws ParserException
+     *             Error while the parsing process
      */
     private void processGenerics(Type genericType, Property property, Definition definition, Definition rootDefinition)
             throws ParserException {
@@ -180,8 +208,11 @@ public class DefinitionParser extends AbstractParser {
      * Processes the annotations and searches for required fields
      * 
      * @param annotations
+     *            array of annotations
      * @param definition
+     *            current definition
      * @param fieldName
+     *            name of the field
      */
     private void processAnnotations(Annotation[] annotations, Definition definition, String fieldName) {
         for (Annotation annotation : annotations) {
@@ -200,8 +231,14 @@ public class DefinitionParser extends AbstractParser {
      * Creates a definition for a class whose package is known
      * 
      * @param schema
+     *            class to check if a definition has to be created
      * @param packageName
+     *            package of the class
+     * @param rootDefinition
+     *            definition where the recursion started to prevent an endless
+     *            loop
      * @throws ParserException
+     *             Error while the parsing process
      */
     public void createDefinitionBySchemaAndPackageIfNotExists(String schema, String packageName,
             Definition rootDefinition) throws ParserException {

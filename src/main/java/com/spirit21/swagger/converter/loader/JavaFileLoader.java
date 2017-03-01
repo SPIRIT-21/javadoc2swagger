@@ -33,8 +33,10 @@ public class JavaFileLoader extends AbstractLoader {
      * list of {@link JavaFile} objects
      * 
      * @param project
+     *            Maven Project
      * @return List of java files
      * @throws JavaFileLoadException
+     *             An error occured while loading the Java files
      */
     public List<JavaFile> getJavaFiles(MavenProject project) throws JavaFileLoadException {
         try {
@@ -126,6 +128,13 @@ public class JavaFileLoader extends AbstractLoader {
         return javaFiles;
     }
 
+    /**
+     * Gets the package name of a java file
+     * 
+     * @param fileString
+     *            file as string
+     * @return package or null
+     */
     private String getPackageNameFromFile(String fileString) {
         Pattern pattern = Pattern.compile("package [^;]*;");
         Matcher matcher = pattern.matcher(fileString);

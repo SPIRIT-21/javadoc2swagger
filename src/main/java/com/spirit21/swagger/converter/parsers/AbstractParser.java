@@ -37,14 +37,17 @@ public abstract class AbstractParser {
      * char sequence with an offset.
      * 
      * @param regex
+     *            regular expression
      * @param offset
+     *            number of characters to cut the found string at the beginning
      * @param section
+     *            string in where to search for matches
      * @return String
      */
     protected String findStringInSectionByRegex(String regex, int offset, String section) {
         Pattern pattern = Pattern.compile(regex, Pattern.DOTALL);
         Matcher matcher = pattern.matcher(section);
-        while (matcher.find()) {
+        if (matcher.find()) {
             String ret = section.substring(matcher.start() + offset, matcher.end());
             ret = ret.trim().replace("\n", "");
             return ret;
@@ -56,6 +59,7 @@ public abstract class AbstractParser {
      * Removes link tags and code blocks from string
      * 
      * @param str
+     *            input string
      * @return formatted string
      */
     protected String removeUnwantedCharactersFromJavadocDescription(String str) {

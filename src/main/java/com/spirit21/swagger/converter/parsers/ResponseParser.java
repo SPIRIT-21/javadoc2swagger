@@ -28,8 +28,14 @@ public class ResponseParser extends AbstractParser {
      * Searches for responses in a String.
      * 
      * @param section
+     *            javadoc section
+     * @param imports
+     *            imports of a java file
+     * @param fileName
+     *            java file name
      * @return List of {@link Resource}
      * @throws ParserException
+     *             Error while the parsing process
      */
     public List<Response> findResponsesInJavadocSection(String section, List<String> imports, String fileName)
             throws ParserException {
@@ -49,8 +55,14 @@ public class ResponseParser extends AbstractParser {
      * the fields for a resource.
      * 
      * @param section
+     *            javadoc section
+     * @param imports
+     *            imports of a java file
+     * @param fileName
+     *            java file name
      * @return {@link Resource}
      * @throws ParserException
+     *             Error while the parsing process
      */
     private Response generateResponseFromSection(String section, List<String> imports, String fileName)
             throws ParserException {

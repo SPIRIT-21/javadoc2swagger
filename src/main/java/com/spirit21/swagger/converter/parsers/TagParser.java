@@ -24,6 +24,7 @@ public class TagParser extends AbstractParser {
      * Get all needed tags by a path and creates them if necessary
      * 
      * @param path
+     *            given path
      * @return List of Tags
      */
     public List<Tag> generateTags(String path) {
@@ -49,6 +50,7 @@ public class TagParser extends AbstractParser {
      * Checks if a tag is already contained in tags list
      * 
      * @param tagName
+     *            tag name
      * @return
      */
     private boolean isTagContained(String tagName) {

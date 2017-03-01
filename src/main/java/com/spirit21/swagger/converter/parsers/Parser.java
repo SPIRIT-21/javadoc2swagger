@@ -27,10 +27,13 @@ public class Parser extends AbstractParser {
     /**
      * Loads all parsers and executes each of them passing the Javadoc strings
      * 
-     * @param javadoc
-     *            Javadoc sections as a list of strings
+     * @param javaFiles
+     *            Java files
      * @throws ParserException
+     *             Error while the parsing process
      * @throws ClassNotFoundException
+     *             a class was not found
+     * @return {@link Swagger} object
      */
     public Swagger parse(List<JavaFile> javaFiles) throws ParserException, ClassNotFoundException {
         List<SwaggerParser> parsers = new ArrayList<>();
@@ -47,8 +50,13 @@ public class Parser extends AbstractParser {
      * Adds the data from the parser to a given list.
      * 
      * @param destination
-     * @param source
+     *            array to add the objects created while parsing
+     * @param javaFiles
+     *            all java files
+     * @param parser
+     *            given parser
      * @throws ParserException
+     *             Error while the parsing process
      * @throws ClassNotFoundException
      */
     private void addDataFromParser(List<SwaggerModel> destination, List<JavaFile> javaFiles, SwaggerParser parser)
@@ -60,10 +68,11 @@ public class Parser extends AbstractParser {
     }
 
     /**
-     * Iterates over the data and appends it to a {@link Swagger} object
+     * Iterates over the data and returns a single {@link Swagger} object
      * 
-     * @param swaggerObject
      * @param data
+     *            all objects created while parsing
+     * @return swagger object
      */
     private Swagger createSwaggerObject(List<SwaggerModel> data) {
         Swagger swaggerObject = new Swagger();

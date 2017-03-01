@@ -19,6 +19,7 @@ public class ApiJavadocLoader extends AbstractLoader {
      * Find Javadoc that contains basic API information.
      * 
      * @param fileString
+     *            file as a single string
      * @return javadoc
      */
     public String getApiJavadocFromJavaFile(String fileString) {

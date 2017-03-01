@@ -38,10 +38,15 @@ public class OperationParser extends AbstractParser {
      * Finds all operations in a {@link JavaFile} and sets all fields if a
      * operation was found.
      * 
-     * @param javadoc
+     * @param javaFile
+     *            java file object
      * @param path
+     *            path of the resource
+     * @param cls
+     *            class of the analyzed java file
      * @return List of {@link Operation}
      * @throws ParserException
+     *             Error while the parsing process
      */
     public List<Operation> findOperationsInJavaFile(JavaFile javaFile, String path, Class<?> cls)
             throws ParserException {
@@ -92,7 +97,9 @@ public class OperationParser extends AbstractParser {
      * Searches for the java method where the given http method is annotated
      * 
      * @param httpMethod
+     *            HTTP method
      * @param classMethods
+     *            all methods
      * @return null or the found method
      */
     private java.lang.reflect.Method findMethod(String httpMethod, java.lang.reflect.Method[] classMethods) {
@@ -113,11 +120,13 @@ public class OperationParser extends AbstractParser {
     /**
      * Find media types of a @Produces or @Consumes Annotation.
      * 
-     * @param annotations
+     * @param method
+     *            method to analyze the annotations
      * @param type
      *            annotation type
      * @return list of media types
      * @throws ParserException
+     *             Error while the parsing process
      */
     private List<String> findMediaTypesInAnnotations(java.lang.reflect.Method method, ResourceAcceptType type)
             throws ParserException {

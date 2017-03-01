@@ -25,6 +25,7 @@ public class MethodLoader extends AbstractLoader {
      * Find methods that define an operation.
      * 
      * @param file
+     *            file as string
      * @return {@link Method} object
      */
     public List<Method> getMethodsFromJavaFile(String file) {
@@ -48,6 +49,13 @@ public class MethodLoader extends AbstractLoader {
         return methods;
     }
 
+    /**
+     * Finds HTTP methods in the annotation list
+     * 
+     * @param annotations
+     *            Annotations as string
+     * @return formatted annotation or null
+     */
     private String findHttpMethodInAnnotations(List<String> annotations) {
         for (String annotation : annotations) {
             switch (annotation) {
