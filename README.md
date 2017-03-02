@@ -18,21 +18,23 @@ This section will be updated as soon as the repository is deployed to Maven cent
 
 If you want the Swagger file to be added to your JAR / WAR, use the `maven-jar-plugin` / `maven-war-plugin`. The following example adds all JSON files located in the `target/swagger` folder to the root directory of the created WAR:
 
-	<plugin>
-		<groupId>org.apache.maven.plugins</groupId>
-		<artifactId>maven-war-plugin</artifactId>
-		<version>3.0.0</version>
-		<configuration>
-			<webResources>
-				<resource>
-					<directory>target/swagger</directory>
-					<includes>
-						<include>*.json</include>
-					</includes>
-				</resource>
-			</webResources>
-		</configuration>
-	</plugin>
+```xml
+<plugin>
+	<groupId>org.apache.maven.plugins</groupId>
+	<artifactId>maven-war-plugin</artifactId>
+	<version>3.0.0</version>
+	<configuration>
+		<webResources>
+			<resource>
+				<directory>target/swagger</directory>
+				<includes>
+					<include>*.json</include>
+				</includes>
+			</resource>
+		</webResources>
+	</configuration>
+</plugin>
+```
 	
 ## Usage
 To execute the plugin, initiate the Maven compile phase, e.g. by executing `mvn clean install` in the command line.
@@ -40,23 +42,27 @@ To execute the plugin, initiate the Maven compile phase, e.g. by executing `mvn 
 ### Basic API information
 For a valid Swagger documentation, you need to at least provide a title. Place your basic API information anywhere in your Javadoc comments like in this example:
 
-	/**
-	 * @apiTitle API title
-	 * @apiVersion version1
-	 * @apiDescription API description
-	 * @apiHost localhost:8080
-	 * @apiBasePath /example/api/v1
-	 * @fileName swagger-file-name.json
-	 */
+```java
+/**
+ * @apiTitle API title
+ * @apiVersion version1
+ * @apiDescription API description
+ * @apiHost localhost:8080
+ * @apiBasePath /example/api/v1
+ * @fileName swagger-file-name.json
+ */
+```
 
 ### Resources
 For defining a resource, a path must be provided. When using a path parameter, its format must be defined. This information needs to be placed in the Javadoc of the class definition, like in the following example:
 
-	/**
-	 * @path /type/{id}
-	 * @pathParam id @type number @format long
-	 */
-	public class ...
+```java
+/**
+ * @path /type/{id}
+ * @pathParam id @type number @format long
+ */
+public class ...
+```
 	
 ### Operations
 An operation must be defined in the same file as its resource! Otherwise the operation will be ignored because it cannot be assigned to a resource.
@@ -66,23 +72,27 @@ The plugin detects the JAX-RS HTTP-method annotations and the `@Produces` / `@Co
 ### Parameters
 Parameters are obtained by the parameter list of the java function. Use the `@QueryParam` annotation for query parameters. If you don't want a parameter to be included in the Swagger documentation, paste the following comment: `/* @swagger:ignore */`. Following example ignores the `date` parameter:
 
-	public Response updateType(Type type, /* @swagger:ignore */ Date date) { ...
+```java
+public Response updateType(Type type, /* @swagger:ignore */ Date date) { ...
+```
 	
 If you want to provide a description for a parameter, use the built-in `@param` Javadoc tag, followed by the name and finally the description.
 
 ### Responses
 Responses have to be defined in the Javadoc code. Use the tags `@responseCode` and `@responseMessage`. Provide a schema of your response type with the tag `@responseSchema` followed by a link tag pointing to the class with the schema. Use the tag `@responseType` followed by `array` if an array of object is returned. Following example uses all possible tags:
 
-	/**
-     * @responseCode 201
-     * @responseMessage Types were returned successfully
-     * @responseSchema {@link Type}
-     * @responseType array
-     * 
-     * @responseCode 400
-     * @responseMessage An error occurred while validation
-     * @responseSchema {@link ErrorCode}
-     */
+```java
+/**
+ * @responseCode 201
+ * @responseMessage Types were returned successfully
+ * @responseSchema {@link Type}
+ * @responseType array
+ * 
+ * @responseCode 400
+ * @responseMessage An error occurred while validation
+ * @responseSchema {@link ErrorCode}
+ */
+```
 
 ## Troubleshooting
 Following section lists some errors that might occure when executing the plugin and how to fix them.
