@@ -39,12 +39,14 @@ public class ParameterParser extends AbstractParser {
      *            javadoc section
      * @param fileName
      *            java file name
+     * @param packageName
+     *            package name of current java file
      * @return parameters
      * @throws ParserException
      *             Error while the parsing process
      */
     public List<Parameter> findParametersInMethodHeader(String header, List<String> imports, String javadoc,
-            String fileName) throws ParserException {
+            String fileName, String packageName) throws ParserException {
         descriptionMap = getParameterDescriptionMap(javadoc);
         String regex = "\\((?s:.)*\\)";
         Pattern pattern = Pattern.compile(regex);
@@ -56,7 +58,7 @@ public class ParameterParser extends AbstractParser {
                 List<Parameter> retParameters = new ArrayList<>();
                 for (String param : parameters) {
                     if (!param.contains("/* @swagger:ignore */")) {
-                        Parameter parameter = getParameter(param, imports, fileName);
+                        Parameter parameter = getParameter(param, imports, fileName, packageName);
                         if (parameter != null) {
                             retParameters.add(parameter);
                         }
@@ -86,7 +88,7 @@ public class ParameterParser extends AbstractParser {
      * @throws ParserException
      *             Error while the parsing process
      */
-    private Parameter getParameter(String paramUnformatted, List<String> imports, String fileName)
+    private Parameter getParameter(String paramUnformatted, List<String> imports, String fileName, String packageName)
             throws ParserException {
         DataTypeFactory typeHandler = new DataTypeFactory();
         DefinitionParser definitionParser = new DefinitionParser(log, loader, tags, definitions);
@@ -118,7 +120,7 @@ public class ParameterParser extends AbstractParser {
             if (type.startsWith("#") && !isQueryParam) {
                 // reference -> body parameter
                 parameter.setLocation("body");
-                String title = definitionParser.createDefinitionIfNotExists(type, imports, fileName);
+                String title = definitionParser.createDefinitionIfNotExists(type, imports, fileName, packageName);
                 if (title != null) {
                     Definition definition = definitionParser.getDefinitionByClassName(title);
                     parameter.setDefinition(definition);

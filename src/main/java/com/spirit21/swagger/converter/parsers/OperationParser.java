@@ -72,12 +72,13 @@ public class OperationParser extends AbstractParser {
             operation.setTags(tagParser.generateTags(path));
             operation.setOperationId(met.getHttpMethod() + path.replace("/", ""));
             List<com.spirit21.swagger.converter.models.Parameter> parameters = parameterParser
-                    .findParametersInMethodHeader(met.getHeader(), imports, met.getJavadoc(), javaFile.getFileName());
+                    .findParametersInMethodHeader(met.getHeader(), imports, met.getJavadoc(), javaFile.getFileName(),
+                            javaFile.getPackageName());
             if (parameters != null && !parameters.isEmpty()) {
                 operation.setParameters(parameters);
             }
             List<Response> responses = responseParser.findResponsesInJavadocSection(section, imports,
-                    javaFile.getFileName());
+                    javaFile.getFileName(), javaFile.getPackageName());
             if (!responses.isEmpty()) {
                 operation.setResponses(responses);
             } else {
