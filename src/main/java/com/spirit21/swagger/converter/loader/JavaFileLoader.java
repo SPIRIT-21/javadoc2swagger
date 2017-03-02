@@ -104,6 +104,7 @@ public class JavaFileLoader extends AbstractLoader {
             JavaFile javaFile = new JavaFile();
             String packageName = getPackageNameFromFile(fileString);
             List<String> imports = importLoader.getImportsFromFile(fileString);
+            imports.add(packageName);
             List<Method> methods = methodLoader.getMethodsFromJavaFile(fileString);
             String apiJavadoc = apiJavadocLoader.getApiJavadocFromJavaFile(fileString);
             List<String> classAnnotations = classAnnotationLoader.getClassAnnotationsFromJavaFile(fileString);

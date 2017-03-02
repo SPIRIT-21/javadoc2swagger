@@ -53,11 +53,13 @@ public class DefinitionParser extends AbstractParser {
      *            imports of the java file
      * @param fileName
      *            file name
+     * @param packageName
+     *            package name of current java file
      * @return class name
      * @throws ParserException
      *             Error while the parsing process
      */
-    public String createDefinitionIfNotExists(String input, List<String> imports, String fileName)
+    public String createDefinitionIfNotExists(String input, List<String> imports, String fileName, String packageName)
             throws ParserException {
         String className;
         if (input.startsWith("{")) {
@@ -69,7 +71,7 @@ public class DefinitionParser extends AbstractParser {
         }
         Definition definition = getDefinitionByClassName(className);
         if (definition == null) {
-            definitions.add(createDefinitionByClassName(className, imports, fileName, null));
+            definitions.add(createDefinitionByClassName(className, imports, fileName, null, packageName));
         }
         return className;
     }
@@ -88,33 +90,45 @@ public class DefinitionParser extends AbstractParser {
      * @param rootDefinition
      *            definition where the recursion started to prevent an endless
      *            loop
+     * @param filePackageName
+     *            package name of current java file
      * @return new {@link Definition} object
      * @throws ParserException
      *             Error while the parsing process
      */
     public Definition createDefinitionByClassName(String className, List<String> imports, String fileName,
-            Definition rootDefinition) throws ParserException {
+            Definition rootDefinition, String filePackageName) throws ParserException {
+        log.info("new import sequence");
         for (String imp : imports) {
+            log.info("import: " + imp);
             String regex = ".*[.]" + className;
             if (imp.matches(regex)) {
                 String classWithPackage = imp;
                 try {
-                    Class<?> cls = loader.loadClass(classWithPackage);
-                    Field[] fields = cls.getDeclaredFields();
-                    Definition definition = new Definition();
-                    definition.setClassName(className);
-                    if (rootDefinition == null) {
-                        rootDefinition = definition;
-                    }
-                    List<Property> properties = processFields(fields, definition, rootDefinition);
-                    definition.setProperties(properties);
-                    return definition;
+                    return getDefinitionByClass(loader.loadClass(classWithPackage), className, rootDefinition);
                 } catch (Exception e) {
                     throw new ParserException("Error loading class '" + classWithPackage + "'", e);
                 }
             }
         }
-        throw new ParserException("Class not found in imports: " + className + "; file: " + fileName);
+        try {
+            return getDefinitionByClass(loader.loadClass(filePackageName + "." + className), className, rootDefinition);
+        } catch (Exception e) {
+            throw new ParserException("Class not found in imports: " + className + "; file: " + fileName);
+        }
+    }
+
+    private Definition getDefinitionByClass(Class<?> cls, String className, Definition rootDefinition)
+            throws ParserException {
+        Field[] fields = cls.getDeclaredFields();
+        Definition definition = new Definition();
+        definition.setClassName(className);
+        if (rootDefinition == null) {
+            rootDefinition = definition;
+        }
+        List<Property> properties = processFields(fields, definition, rootDefinition);
+        definition.setProperties(properties);
+        return definition;
     }
 
     /**
@@ -247,7 +261,7 @@ public class DefinitionParser extends AbstractParser {
         if (definition == null) {
             List<String> imports = new ArrayList<>();
             imports.add(packageName);
-            definitions.add(createDefinitionByClassName(className, imports, "", rootDefinition));
+            definitions.add(createDefinitionByClassName(className, imports, "", rootDefinition, ""));
         }
     }
 }

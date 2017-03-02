@@ -33,19 +33,21 @@ public class ResponseParser extends AbstractParser {
      *            imports of a java file
      * @param fileName
      *            java file name
+     * @param packageName
+     *            package name of current java file
      * @return List of {@link Resource}
      * @throws ParserException
      *             Error while the parsing process
      */
-    public List<Response> findResponsesInJavadocSection(String section, List<String> imports, String fileName)
-            throws ParserException {
+    public List<Response> findResponsesInJavadocSection(String section, List<String> imports, String fileName,
+            String packageName) throws ParserException {
         List<Response> responses = new ArrayList<>();
         String regex = "@responseCode [0-9]{1,3}([\\s]|@responseSchema \\{@link \\w+\\}|@responseType [a-zA-Z]+|@responseMessage [^@]+)*";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(section);
         while (matcher.find()) {
             String responseSection = section.substring(matcher.start(), matcher.end());
-            responses.add(generateResponseFromSection(responseSection, imports, fileName));
+            responses.add(generateResponseFromSection(responseSection, imports, fileName, packageName));
         }
         return responses;
     }
@@ -64,13 +66,13 @@ public class ResponseParser extends AbstractParser {
      * @throws ParserException
      *             Error while the parsing process
      */
-    private Response generateResponseFromSection(String section, List<String> imports, String fileName)
-            throws ParserException {
+    private Response generateResponseFromSection(String section, List<String> imports, String fileName,
+            String packageName) throws ParserException {
         DefinitionParser definitionParser = new DefinitionParser(log, loader, tags, definitions);
         Response response = new Response();
         String schema = findStringInSectionByRegex("@responseSchema \\{@link \\w+\\}", 16, section);
         if (schema != null) {
-            String title = definitionParser.createDefinitionIfNotExists(schema, imports, fileName);
+            String title = definitionParser.createDefinitionIfNotExists(schema, imports, fileName, packageName);
             Definition definition = definitionParser.getDefinitionByClassName(title);
             response.setDefinition(definition);
         }
