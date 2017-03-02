@@ -14,7 +14,22 @@ First, Swagger annotations are compiled into the JAR / WAR of your server and co
 With this plugin it is possible to place Swagger information in the Javadoc comments to generate a Swagger documentation.
 
 ## Configuration
-This section will be updated as soon as the repository is deployed to Maven central.
+Include the plugin to your POM:
+```xml
+<plugin>
+	<groupId>com.spirit21</groupId>
+	<artifactId>javadoc2swagger-maven-plugin</artifactId>
+	<version>VERSION</version>
+	<executions>
+		<execution>
+			<phase>compile</phase>
+			<goals>
+				<goal>generateswagger</goal>
+			</goals>
+		</execution>
+	</executions>
+</plugin>
+```
 
 If you want the Swagger file to be added to your JAR / WAR, use the `maven-jar-plugin` / `maven-war-plugin`. The following example adds all JSON files located in the `target/swagger` folder to the root directory of the created WAR:
 
