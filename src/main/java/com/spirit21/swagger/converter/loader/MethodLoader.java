@@ -46,6 +46,13 @@ public class MethodLoader extends AbstractLoader {
         return methods;
     }
 
+    /**
+     * Finds HTTP methods in the annotation list
+     *
+     * @param annotations
+     *            Annotations as string
+     * @return formatted annotation or null
+     */
     private String findHttpMethodInAnnotations(List<String> annotations) {
         for (String annotation : annotations) {
             switch (annotation) {
