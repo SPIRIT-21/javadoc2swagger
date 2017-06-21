@@ -2,8 +2,6 @@ package com.spirit21.swagger.converter.loader;
 
 import org.apache.maven.plugin.logging.Log;
 
-import com.spirit21.swagger.converter.Regex;
-
 /**
  * 
  * @author dsimon
@@ -11,7 +9,6 @@ import com.spirit21.swagger.converter.Regex;
  */
 public abstract class AbstractLoader {
     protected Log log;
-    protected Regex regexes = new Regex();
 
     public AbstractLoader(Log log) {
         this.log = log;

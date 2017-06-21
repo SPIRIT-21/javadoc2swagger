@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
 
 import javax.validation.constraints.NotNull;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.maven.plugin.logging.Log;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -120,7 +121,19 @@ public class DefinitionParser extends AbstractParser {
 
     private Definition getDefinitionByClass(Class<?> cls, String className, Definition rootDefinition)
             throws ParserException {
+
         Field[] fields = cls.getDeclaredFields();
+
+        // if cls is enum, remove the values field
+        if (cls.isEnum()) {
+            for (int i = fields.length - 1; i >= 0; i--) {
+                if (!fields[i].isEnumConstant()) {
+                    fields = ArrayUtils.removeElement(fields, fields[i]);
+                    break;
+                }
+            }
+        }
+
         Definition definition = new Definition();
         definition.setClassName(className);
         if (rootDefinition == null) {

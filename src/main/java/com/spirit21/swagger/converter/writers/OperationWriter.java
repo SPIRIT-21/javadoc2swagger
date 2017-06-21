@@ -29,14 +29,14 @@ public class OperationWriter extends AbstractWriter {
      * 
      * @param operations
      *            list of {@link Operation} objects
-     * @param pathParam
-     *            possible path parameter
+     * @param pathParams
+     *            possible path parameters
      * @return JSON for all operations
      */
-    public JSONObject mapOperations(List<Operation> operations, Parameter pathParam) {
+    public JSONObject mapOperations(List<Operation> operations, List<Parameter> pathParams) {
         JSONObject operationsJson = new JSONObject();
         if (operations != null) {
-            operations.forEach(e -> operationsJson.put(e.getMethod(), mapOperation(e, pathParam)));
+            operations.forEach(e -> operationsJson.put(e.getMethod(), mapOperation(e, pathParams)));
         }
         return operationsJson;
     }
@@ -46,11 +46,11 @@ public class OperationWriter extends AbstractWriter {
      * 
      * @param operation
      *            {@link Operation} object
-     * @param pathParam
-     *            possible path parameter
+     * @param pathParams
+     *            possible path parameters
      * @return JSON for a single operation
      */
-    private JSONObject mapOperation(Operation operation, Parameter pathParam) {
+    private JSONObject mapOperation(Operation operation, List<Parameter> pathParams) {
         JSONObject obj = new JSONObject();
         String description = operation.getDescription();
         String summary = operation.getSummary();
@@ -78,11 +78,11 @@ public class OperationWriter extends AbstractWriter {
         }
         obj.put("tags", tagWriter.mapTags(operation.getTags()));
         List<Parameter> parameters = operation.getParameters();
-        if (pathParam != null) {
+        if (pathParams != null) {
             if (parameters == null) {
                 parameters = new ArrayList<>();
             }
-            parameters.add(pathParam);
+            parameters.addAll(pathParams);
         }
         if (parameters != null && !parameters.isEmpty()) {
             obj.put("parameters", parameterWriter.mapParameters(parameters));

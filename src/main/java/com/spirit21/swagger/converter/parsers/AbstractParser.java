@@ -1,12 +1,12 @@
 package com.spirit21.swagger.converter.parsers;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.maven.plugin.logging.Log;
 
-import com.spirit21.swagger.converter.Regex;
 import com.spirit21.swagger.converter.loader.ClassLoader;
 import com.spirit21.swagger.converter.models.Definition;
 import com.spirit21.swagger.converter.models.Tag;
@@ -22,7 +22,6 @@ public abstract class AbstractParser {
     protected Log log;
     protected ClassLoader loader;
     protected List<Tag> tags;
-    protected Regex regexes = new Regex();
     protected List<Definition> definitions;
 
     public AbstractParser(Log log, ClassLoader loader, List<Tag> tags, List<Definition> definitions) {
@@ -53,6 +52,35 @@ public abstract class AbstractParser {
             return ret;
         }
         return null;
+    }
+
+    /**
+     * Finds all char sequences in a string by a regular expression. Returns the
+     * list of char sequences with an offset.
+     * 
+     * @param regex
+     *            regular expression
+     * @param offset
+     *            number of characters to cut the found string at the beginning
+     * @param section
+     *            string in where to search for matches
+     * @return list of String
+     */
+    protected List<String> findStringsInSectionByRegex(String regex, int offset, String section) {
+        Pattern pattern = Pattern.compile(regex, Pattern.DOTALL);
+        Matcher matcher = pattern.matcher(section);
+
+        List<String> findings = new ArrayList<String>();
+
+        while (matcher.find()) {
+            String ret = section.substring(matcher.start() + offset, matcher.end());
+            ret = ret.trim().replace("\n", "");
+            if (ret.isEmpty()) {
+                ret = null;
+            }
+            findings.add(ret);
+        }
+        return findings;
     }
 
     /**

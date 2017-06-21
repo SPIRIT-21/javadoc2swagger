@@ -13,6 +13,7 @@ import java.util.regex.Pattern;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.project.MavenProject;
 
+import com.spirit21.swagger.converter.Regex;
 import com.spirit21.swagger.converter.models.JavaFile;
 import com.spirit21.swagger.converter.models.Method;
 
@@ -101,10 +102,14 @@ public class JavaFileLoader extends AbstractLoader {
         List<JavaFile> javaFiles = new ArrayList<>();
         for (Path file : files) {
             String fileString = fileAsString(Files.readAllLines(file));
+
+            if (ignoreJavaFile(fileString)) {
+                continue;
+            }
+
             JavaFile javaFile = new JavaFile();
             String packageName = getPackageNameFromFile(fileString);
             List<String> imports = importLoader.getImportsFromFile(fileString);
-            imports.add(packageName);
             List<Method> methods = methodLoader.getMethodsFromJavaFile(fileString);
             String apiJavadoc = apiJavadocLoader.getApiJavadocFromJavaFile(fileString);
             List<String> classAnnotations = classAnnotationLoader.getClassAnnotationsFromJavaFile(fileString);
@@ -130,6 +135,22 @@ public class JavaFileLoader extends AbstractLoader {
     }
 
     /**
+     * Returns true, if the given fileString contains the regex for ignoring
+     * javafile
+     * 
+     * @param fileString
+     *            the class as file string
+     * @return true, if the given fileString contains the regex for ignoring
+     *         javafile
+     */
+    private boolean ignoreJavaFile(String fileString) {
+
+        Pattern pattern = Pattern.compile(Regex.IGNORE_JAVAFILE);
+        Matcher matcher = pattern.matcher(fileString);
+        return matcher.find();
+    }
+
+    /**
      * Gets the package name of a java file
      * 
      * @param fileString
@@ -137,7 +158,7 @@ public class JavaFileLoader extends AbstractLoader {
      * @return package or null
      */
     private String getPackageNameFromFile(String fileString) {
-        Pattern pattern = Pattern.compile("package [^;]*;");
+        Pattern pattern = Pattern.compile(Regex.PACKAGE);
         Matcher matcher = pattern.matcher(fileString);
         if (matcher.find()) {
             return fileString.substring(matcher.start() + 8, matcher.end() - 1);

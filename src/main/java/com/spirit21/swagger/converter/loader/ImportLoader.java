@@ -7,6 +7,8 @@ import java.util.regex.Pattern;
 
 import org.apache.maven.plugin.logging.Log;
 
+import com.spirit21.swagger.converter.Regex;
+
 /**
  * 
  * @author dsimon
@@ -26,8 +28,7 @@ public class ImportLoader extends AbstractLoader {
      * @return List of string
      */
     public List<String> getImportsFromFile(String file) {
-        String regex = regexes.getImportRegex();
-        Pattern pattern = Pattern.compile(regex);
+        Pattern pattern = Pattern.compile(Regex.IMPORT);
         List<String> sections = new ArrayList<>();
         Matcher matcher = pattern.matcher(file);
         while (matcher.find()) {

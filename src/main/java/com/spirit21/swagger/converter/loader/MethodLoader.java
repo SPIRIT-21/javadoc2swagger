@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 
 import org.apache.maven.plugin.logging.Log;
 
+import com.spirit21.swagger.converter.Regex;
 import com.spirit21.swagger.converter.models.Method;
 
 /**
@@ -30,32 +31,21 @@ public class MethodLoader extends AbstractLoader {
      */
     public List<Method> getMethodsFromJavaFile(String file) {
         List<Method> methods = new ArrayList<>();
-        String javadocRegex = regexes.getJavadocRegex();
-        String annotationRegex = regexes.getAnnotationRegex();
-        String methodRegex = regexes.getMethodRegex();
-        String httpMethodRegex = regexes.getHttpMethodRegex();
-        String sectionRegex = javadocRegex + "[\\s]*" + httpMethodRegex + "([\\s]*" + annotationRegex + ")*[\\s]*"
-                + methodRegex;
+        String sectionRegex = Regex.JAVADOC + "[\\s]*" + Regex.HTTP_METHOD + "([\\s]*" + Regex.ANNOTATION + ")*[\\s]*"
+                + Regex.METHOD;
         Pattern pattern = Pattern.compile(sectionRegex, Pattern.DOTALL);
         Matcher matcher = pattern.matcher(file);
         while (matcher.find()) {
             String section = file.substring(matcher.start(), matcher.end());
-            String javadocSection = findJavadocSectionByRegexInSection(section, javadocRegex);
-            List<String> annotations = findAnnotationsByRegexInSection(section, annotationRegex);
-            String header = findMethodByRegexInSection(section, methodRegex);
+            String javadocSection = findJavadocSectionByRegexInSection(section, Regex.JAVADOC);
+            List<String> annotations = findAnnotationsByRegexInSection(section, Regex.ANNOTATION);
+            String header = findMethodByRegexInSection(section, Regex.METHOD);
             String httpMethod = findHttpMethodInAnnotations(annotations);
             methods.add(new Method(removeJavadocCharactersFromString(javadocSection), httpMethod, header));
         }
         return methods;
     }
 
-    /**
-     * Finds HTTP methods in the annotation list
-     * 
-     * @param annotations
-     *            Annotations as string
-     * @return formatted annotation or null
-     */
     private String findHttpMethodInAnnotations(List<String> annotations) {
         for (String annotation : annotations) {
             switch (annotation) {

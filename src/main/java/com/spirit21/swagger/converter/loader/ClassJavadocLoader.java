@@ -5,6 +5,8 @@ import java.util.regex.Pattern;
 
 import org.apache.maven.plugin.logging.Log;
 
+import com.spirit21.swagger.converter.Regex;
+
 /**
  * 
  * @author dsimon
@@ -24,14 +26,12 @@ public class ClassJavadocLoader extends AbstractLoader {
      * @return Javadoc section as String
      */
     public String getClassJavadocFromJavaFile(String fileString) {
-        String javadocRegex = regexes.getJavadocRegex();
-        String regex = javadocRegex + "[\\s]*(" + regexes.getAnnotationRegex() + "[\\s]*)+[\\s]*"
-                + regexes.getClassRegex();
+        String regex = Regex.JAVADOC + "[\\s]*(" + Regex.ANNOTATION + "[\\s]*)+[\\s]*" + Regex.CLASS;
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(fileString);
         while (matcher.find()) {
             String section = fileString.substring(matcher.start(), matcher.end());
-            Pattern javadocPattern = Pattern.compile(javadocRegex);
+            Pattern javadocPattern = Pattern.compile(Regex.JAVADOC);
             Matcher javadocMatcher = javadocPattern.matcher(section);
             while (javadocMatcher.find()) {
                 return section.substring(javadocMatcher.start(), javadocMatcher.end());
