@@ -78,6 +78,17 @@ For defining a resource, a path must be provided. When using a path parameter, i
  */
 public class ...
 ```
+
+When using multiple path parameters, please ensure that the `@format` tag is always given. If you don't want to specify a format, leave the text behind the tag empty. Example:
+
+```java
+/**
+ * @path /type/{id}/{childId}
+ * @pathParam id @type string @format
+ * @pathParam childId @type number @format long
+ */
+public class ...
+```
 	
 ### Operations
 An operation must be defined in the same file as its resource! Otherwise the operation will be ignored because it cannot be assigned to a resource.
@@ -134,3 +145,4 @@ Following section lists some errors that might occure when executing the plugin 
 	</dependencies>
 </plugin>
 ```
+If the error persists, you can ignore the whole Java file by placing the following somewhere in the Javadoc comments: `@swagger:ignore_javafile`. This doesn't fix the problem but allows you to still create Swagger for all your other Java files.

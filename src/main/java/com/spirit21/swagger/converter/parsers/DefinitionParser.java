@@ -99,9 +99,9 @@ public class DefinitionParser extends AbstractParser {
      */
     public Definition createDefinitionByClassName(String className, List<String> imports, String fileName,
             Definition rootDefinition, String filePackageName) throws ParserException {
-        log.info("new import sequence");
+        log.debug("new import sequence");
         for (String imp : imports) {
-            log.info("import: " + imp);
+            log.debug("import: " + imp);
             String regex = ".*[.]" + className;
             if (imp.matches(regex)) {
                 String classWithPackage = imp;
