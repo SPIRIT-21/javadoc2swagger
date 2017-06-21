@@ -29,7 +29,7 @@ public class ResourceWriter extends AbstractWriter {
     public JSONObject mapResources(List<Resource> resources) {
         JSONObject resourcesJson = new JSONObject();
         resources.forEach(e -> resourcesJson.put(e.getPath(),
-                operationWriter.mapOperations(e.getOperations(), e.getPathParameter())));
+                operationWriter.mapOperations(e.getOperations(), e.getPathParameters())));
         return resourcesJson;
     }
 }

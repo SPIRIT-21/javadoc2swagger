@@ -10,7 +10,7 @@ import java.util.List;
 public class Resource implements SwaggerModel {
 
     private String path;
-    private Parameter pathParameter;
+    private List<Parameter> pathParameters;
     private List<Operation> operations;
 
     public String getPath() {
@@ -29,11 +29,11 @@ public class Resource implements SwaggerModel {
         this.operations = operations;
     }
 
-    public Parameter getPathParameter() {
-        return pathParameter;
+    public List<Parameter> getPathParameters() {
+        return pathParameters;
     }
 
-    public void setPathParameter(Parameter pathParameter) {
-        this.pathParameter = pathParameter;
+    public void setPathParameters(List<Parameter> pathParameters) {
+        this.pathParameters = pathParameters;
     }
 }

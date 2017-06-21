@@ -1,5 +1,6 @@
 package com.spirit21.swagger.converter.parsers;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -51,6 +52,32 @@ public abstract class AbstractParser {
             return ret;
         }
         return null;
+    }
+
+    /**
+     * Finds all char sequences in a string by a regular expression. Returns the
+     * list of char sequences with an offset.
+     * 
+     * @param regex
+     * @param offset
+     * @param section
+     * @return String
+     */
+    protected List<String> findStringsInSectionByRegex(String regex, int offset, String section) {
+        Pattern pattern = Pattern.compile(regex, Pattern.DOTALL);
+        Matcher matcher = pattern.matcher(section);
+
+        List<String> findings = new ArrayList<String>();
+
+        while (matcher.find()) {
+            String ret = section.substring(matcher.start() + offset, matcher.end());
+            ret = ret.trim().replace("\n", "");
+            if (ret.isEmpty()) {
+                ret = null;
+            }
+            findings.add(ret);
+        }
+        return findings;
     }
 
     /**

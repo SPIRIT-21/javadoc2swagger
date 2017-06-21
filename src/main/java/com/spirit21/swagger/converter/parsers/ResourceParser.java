@@ -62,8 +62,8 @@ public class ResourceParser extends AbstractParser implements SwaggerParser {
                 String path = section.substring(matcher.start() + 6, matcher.end());
                 Resource resource = new Resource();
                 resource.setPath(path);
-                Parameter pathParameter = getPathParameter(section);
-                resource.setPathParameter(pathParameter);
+                List<Parameter> pathParameters = getPathParameters(section);
+                resource.setPathParameters(pathParameters);
                 resource.setOperations(operationParser.findOperationsInJavaFile(file, path, cls));
                 return resource;
             }
@@ -72,26 +72,38 @@ public class ResourceParser extends AbstractParser implements SwaggerParser {
     }
 
     /**
-     * Finds PathParameter
+     * Finds PathParameters
      * 
      * @param section
      * @return Parameter
      */
-    private Parameter getPathParameter(String section) {
-        String name = findStringInSectionByRegex("@pathParam \\w+", 11, section);
-        String type = findStringInSectionByRegex("@type \\w+", 6, section);
-        String format = findStringInSectionByRegex("@format \\w+", 8, section);
-        if (name != null && type != null) {
+    private List<Parameter> getPathParameters(String section) {
+
+        List<String> names = findStringsInSectionByRegex("@pathParam \\w+", 11, section);
+        List<String> types = findStringsInSectionByRegex("@type \\w+", 6, section);
+        /*
+         * if there are multiple path parameters with at least one occurring
+         * format , all path parameters needs @format to ensure the right order.
+         * if no format needed, @format will suffice. thats why (\\w+)?
+         */
+        List<String> formats = findStringsInSectionByRegex("@format (\\w+)?", 8, section);
+
+        List<Parameter> pathParameters = new ArrayList<Parameter>();
+
+        for (int i = 0; i < names.size(); i++) {
+
             Parameter param = new Parameter();
             param.setLocation("path");
-            param.setName(name);
+            param.setName(names.get(i));
             param.setRequired(true);
-            param.setType(type);
-            if (format != null) {
-                param.setFormat(format);
+            param.setType(types.get(i));
+            if (!formats.isEmpty()) {
+                param.setFormat(formats.get(i));
             }
-            return param;
+
+            pathParameters.add(param);
         }
-        return null;
+
+        return pathParameters;
     }
 }
