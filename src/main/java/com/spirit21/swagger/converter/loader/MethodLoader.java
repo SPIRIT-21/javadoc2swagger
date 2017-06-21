@@ -26,6 +26,7 @@ public class MethodLoader extends AbstractLoader {
      * Find methods that define an operation.
      * 
      * @param file
+     *            file as string
      * @return {@link Method} object
      */
     public List<Method> getMethodsFromJavaFile(String file) {

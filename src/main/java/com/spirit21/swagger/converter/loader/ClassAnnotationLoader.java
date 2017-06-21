@@ -23,6 +23,7 @@ public class ClassAnnotationLoader extends AbstractLoader {
      * Finds the section with the class definition and its annotations
      * 
      * @param fileString
+     *            file as a single string
      * @return List of annotations
      */
     public List<String> getClassAnnotationsFromJavaFile(String fileString) {

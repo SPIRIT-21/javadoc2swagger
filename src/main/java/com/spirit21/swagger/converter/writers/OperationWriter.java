@@ -29,8 +29,8 @@ public class OperationWriter extends AbstractWriter {
      * 
      * @param operations
      *            list of {@link Operation} objects
-     * @param pathParam
-     *            possible path parameter
+     * @param pathParams
+     *            possible path parameters
      * @return JSON for all operations
      */
     public JSONObject mapOperations(List<Operation> operations, List<Parameter> pathParams) {
@@ -46,8 +46,8 @@ public class OperationWriter extends AbstractWriter {
      * 
      * @param operation
      *            {@link Operation} object
-     * @param pathParam
-     *            possible path parameter
+     * @param pathParams
+     *            possible path parameters
      * @return JSON for a single operation
      */
     private JSONObject mapOperation(Operation operation, List<Parameter> pathParams) {

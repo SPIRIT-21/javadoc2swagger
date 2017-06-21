@@ -59,9 +59,12 @@ public abstract class AbstractParser {
      * list of char sequences with an offset.
      * 
      * @param regex
+     *            regular expression
      * @param offset
+     *            number of characters to cut the found string at the beginning
      * @param section
-     * @return String
+     *            string in where to search for matches
+     * @return list of String
      */
     protected List<String> findStringsInSectionByRegex(String regex, int offset, String section) {
         Pattern pattern = Pattern.compile(regex, Pattern.DOTALL);
