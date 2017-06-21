@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 
 import org.apache.maven.plugin.logging.Log;
 
+import com.spirit21.swagger.converter.Regex;
 import com.spirit21.swagger.converter.loader.ClassLoader;
 import com.spirit21.swagger.converter.models.Definition;
 import com.spirit21.swagger.converter.models.JavaFile;
@@ -55,7 +56,7 @@ public class ResourceParser extends AbstractParser implements SwaggerParser {
         OperationParser operationParser = new OperationParser(log, loader, tags, definitions);
         String section = file.getClassJavadoc();
         if (section != null) {
-            Pattern pattern = Pattern.compile(regexes.getPathRegex(), Pattern.DOTALL);
+            Pattern pattern = Pattern.compile(Regex.PATH, Pattern.DOTALL);
             Matcher matcher = pattern.matcher(section);
             if (matcher.find()) {
                 String path = section.substring(matcher.start() + 6, matcher.end());

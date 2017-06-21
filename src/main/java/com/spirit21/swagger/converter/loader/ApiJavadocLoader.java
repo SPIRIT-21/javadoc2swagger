@@ -5,6 +5,8 @@ import java.util.regex.Pattern;
 
 import org.apache.maven.plugin.logging.Log;
 
+import com.spirit21.swagger.converter.Regex;
+
 /**
  * 
  * @author dsimon
@@ -19,12 +21,10 @@ public class ApiJavadocLoader extends AbstractLoader {
      * Find Javadoc that contains basic API information.
      * 
      * @param fileString
-     *            file as a single string
      * @return javadoc
      */
     public String getApiJavadocFromJavaFile(String fileString) {
-        String apiJavadocRegex = regexes.getApiJavadocRegex();
-        Pattern pattern = Pattern.compile(apiJavadocRegex);
+        Pattern pattern = Pattern.compile(Regex.API_JAVADOC);
         Matcher matcher = pattern.matcher(fileString);
         while (matcher.find()) {
             return fileString.substring(matcher.start(), matcher.end());

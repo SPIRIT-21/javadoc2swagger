@@ -6,7 +6,6 @@ import java.util.regex.Pattern;
 
 import org.apache.maven.plugin.logging.Log;
 
-import com.spirit21.swagger.converter.Regex;
 import com.spirit21.swagger.converter.loader.ClassLoader;
 import com.spirit21.swagger.converter.models.Definition;
 import com.spirit21.swagger.converter.models.Tag;
@@ -22,7 +21,6 @@ public abstract class AbstractParser {
     protected Log log;
     protected ClassLoader loader;
     protected List<Tag> tags;
-    protected Regex regexes = new Regex();
     protected List<Definition> definitions;
 
     public AbstractParser(Log log, ClassLoader loader, List<Tag> tags, List<Definition> definitions) {

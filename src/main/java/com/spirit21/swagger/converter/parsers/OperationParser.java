@@ -65,7 +65,7 @@ public class OperationParser extends AbstractParser {
             Operation operation = new Operation();
             operation.setMethod(httpMethod);
             operation.setDescription(removeUnwantedCharactersFromJavadocDescription(
-                    findStringInSectionByRegex(regex.getDescriptionRegex(), 0, section)));
+                    findStringInSectionByRegex(Regex.DESCRIPTION, 0, section)));
             operation.setSummary(findStringInSectionByRegex("@summary [^@]+", 9, section));
             operation.setConsumes(findMediaTypesInAnnotations(classMethod, ResourceAcceptType.CONSUMES));
             operation.setProduces(findMediaTypesInAnnotations(classMethod, ResourceAcceptType.PRODUCES));

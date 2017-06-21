@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 
 import org.apache.maven.plugin.logging.Log;
 
+import com.spirit21.swagger.converter.Regex;
 import com.spirit21.swagger.converter.datatype.DataTypeFactory;
 import com.spirit21.swagger.converter.loader.ClassLoader;
 import com.spirit21.swagger.converter.models.DataType;
@@ -93,7 +94,7 @@ public class ParameterParser extends AbstractParser {
         DataTypeFactory typeHandler = new DataTypeFactory();
         DefinitionParser definitionParser = new DefinitionParser(log, loader, tags, definitions);
         Boolean isQueryParam = paramUnformatted.matches(".*@QueryParam\\(\"[^\"]+\"\\).*");
-        String param = paramUnformatted.replaceAll("[\\s]*" + regexes.getAnnotationRegex() + "[\\s]*", "").trim();
+        String param = paramUnformatted.replaceAll("[\\s]*" + Regex.ANNOTATION + "[\\s]*", "").trim();
         if (!param.isEmpty()) {
             String[] split = param.split(" ");
             String className = split[0];
@@ -170,7 +171,7 @@ public class ParameterParser extends AbstractParser {
      */
     private Map<String, String> getParameterDescriptionMap(String javadoc) {
         Map<String, String> map = new HashMap<>();
-        String paramRegex = "@param [a-zA-Z0-9]+ " + regexes.getDescriptionRegex();
+        String paramRegex = "@param [a-zA-Z0-9]+ " + Regex.DESCRIPTION;
         Pattern pattern = Pattern.compile(paramRegex);
         Matcher matcher = pattern.matcher(javadoc);
         while (matcher.find()) {
