@@ -146,3 +146,5 @@ Following section lists some errors that might occure when executing the plugin 
 </plugin>
 ```
 If the error persists, you can ignore the whole Java file by placing the following somewhere in the Javadoc comments: `@swagger:ignore_javafile`. This doesn't fix the problem but allows you to still create Swagger for all your other Java files.
+* "java.lang.IndexOutOfBoundsException: Index: 1, Size: 1"
+  * Solution: When using multiple path parameters in one path, always provide a parameter format. If you don't want to specify a format, leave the text behind the `@format` tag empty.
