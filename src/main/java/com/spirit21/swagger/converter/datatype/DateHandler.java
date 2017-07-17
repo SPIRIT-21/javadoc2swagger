@@ -15,6 +15,8 @@ public class DateHandler implements TypeHandler {
             return new DataType("string", "date");
         } else if (className.equals("LocalDateTime") || className.equals("java.time.LocalDateTime")) {
             return new DataType("string", "date-time");
+        } else if (className.equals("LocalDate") || className.equals("java.time.LocalDate")) {
+            return new DataType("string", "date");
         }
         return null;
     }
