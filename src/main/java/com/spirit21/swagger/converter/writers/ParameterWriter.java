@@ -49,6 +49,7 @@ public class ParameterWriter extends AbstractWriter {
         String location = parameter.getLocation();
         String description = parameter.getDescription();
         Boolean required = parameter.getRequired();
+        String defaultValue = parameter.getDefaultValue();
         Definition definition = parameter.getDefinition();
         if (name != null) {
             obj.put("name", name);
@@ -61,6 +62,11 @@ public class ParameterWriter extends AbstractWriter {
         }
         if (required != null) {
             obj.put("required", required);
+            
+        }
+        if (defaultValue != null) {
+        	obj.put("default", defaultValue);
+        	
         }
         if (definition != null && format == null) {
             JSONObject ref = new JSONObject();

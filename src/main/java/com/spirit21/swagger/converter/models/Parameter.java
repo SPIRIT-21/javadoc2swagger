@@ -8,6 +8,7 @@ package com.spirit21.swagger.converter.models;
 public class Parameter {
 
     private String name;
+    private String defaultValue;
     private String type;
     private String format;
     private String location;
@@ -69,5 +70,12 @@ public class Parameter {
 
     public void setDefinition(Definition definition) {
         this.definition = definition;
+    }
+
+	public String getDefaultValue() {
+		return defaultValue;
+	}
+	public void setDefaultValue(String defaultValue) {
+        this.defaultValue = defaultValue;
     }
 }
