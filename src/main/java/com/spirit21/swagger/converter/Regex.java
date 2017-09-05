@@ -18,5 +18,7 @@ public class Regex {
     public final static String DESCRIPTION = "([^@{]|\\{@|\\{)*";
     public final static String HTTP_METHOD = "(@GET|@POST|@PUT|@DELETE|@PUT)";
     public final static String IGNORE_JAVAFILE = "@swagger:ignore_javafile";
+    public final static String GETMETHODHEADERPARAMETER = "@([a-zA-Z0-9])+(\\((\\s?)*\"(\\s?)*(([a-zA-Z0-9]|_|-)*)(\\s?)*\"(\\s?)*\\))|(@([a-zA-Z0-9])+(\\((\\s?)*\"?(\\s?)*(([a-zA-Z0-9]|_|-)*)(\\s?)*\"?(\\s?)*\\)|))";
+    public final static String GETMETHODHEADERPARAMETERINSIDE = "(?!(@([a-zA-Z0-9])+)\\((\\s?)*\"?(\\s?)*)[a-zA-Z0-9_]*(( [ a-zA-Z0-9_]*)|([a-zA-Z0-9_]+))(?=(\\s?)*\"?(\\s?)*\\))";
 
 }
