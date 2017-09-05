@@ -107,13 +107,12 @@ public class ParameterParser extends AbstractParser {
 
         Matcher m = Pattern.compile(Regex.GETMETHODHEADERPARAMETER).matcher(paramUnformatted);
         while (m.find() && isDefaultValue) {
-            List<String> paramUnformattedTest = new ArrayList<String>();
-            paramUnformattedTest.add(m.group());
-            for (int i = 0; i < paramUnformattedTest.size(); i++) {
-                if (paramUnformattedTest.get(i).contains("@DefaultValue")) {
-                    createMapFromParameters(paramUnformatted);
-                    defaultValue.add(paramUnformattedTest.get(i));
-                }
+            String paramUnformattedTest = m.group();
+
+            if (paramUnformattedTest.contains("@DefaultValue")) {
+                createMapFromParameters(paramUnformatted);
+                defaultValue.add(paramUnformattedTest);
+
             }
         }
         Matcher matchDef = Pattern.compile(Regex.GETMETHODHEADERPARAMETERINSIDE).matcher(defaultValue.toString());
@@ -237,7 +236,7 @@ public class ParameterParser extends AbstractParser {
      * @param paramUnformatted
      * @return
      */
-    private Map<String, String> createMapFromParameters(String paramUnformatted) {
+    private void createMapFromParameters(String paramUnformatted) {
 
         Boolean isDefaultValue = paramUnformatted.matches(".*@DefaultValue\\(\"[^\"]+\"\\).*");
         Boolean isQueryParam = paramUnformatted.matches(".*@QueryParam\\(\"[^\"]+\"\\).*");
@@ -297,8 +296,7 @@ public class ParameterParser extends AbstractParser {
             queryParamValue.add(matchQueryParamValue.group());
         }
 
-        defaultValueMap.put(queryParamValue.toString().replace("[", "").replace("]", ""),
+        this.defaultValueMap.put(queryParamValue.toString().replace("[", "").replace("]", ""),
                 defaultValueValue.toString().replace("[", "").replace("]", ""));
-        return defaultValueMap;
     }
 }
